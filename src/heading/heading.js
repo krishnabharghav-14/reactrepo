@@ -8,6 +8,6 @@ export default Heading1;
 
 export const Heading2 =(prop) => {
     return(
-        <h4>Number of cups : {prop.data}</h4>
+        <h4>{`Number of cups :${prop.data}`}</h4>
     )
 }
