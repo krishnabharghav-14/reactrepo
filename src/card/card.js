@@ -13,7 +13,7 @@ function Customcard(prop) {
         return percent;
     }
   return (
-    <Card style={{ width: '18rem',margin: "10px"}}>
+    <Card className='card' style={{ width: '18rem',margin: "10px",overflow:"hidden"}}>
       {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
       <Imagecom data={image}></Imagecom>
       <Card.Body>
