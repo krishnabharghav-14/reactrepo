@@ -1,21 +1,29 @@
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 import Imagecom from "../image/image";
-import Heading1 from "../heading/heading";
-import { Heading2 } from "../heading/heading";
-// import Listdata from "../listdata/listdata";
-// import Details from "../listdata/listdata";
-// import Obj from "../listdata/listdata";
-import "./card.css"
-const Customcard = (prop) => {
-    const{name, cups, image}=prop.data;
-    return (
-        
-        <div className ="card">
+import Heading1,{ Heading2 } from "../heading/heading";
+import CustomProgressbar from '../reactbootstrap/progressbar';
 
-            <Imagecom data={image}></Imagecom>
-            <Heading1 data={name}></Heading1>
-            <Heading2 data={cups}></Heading2>
-        </div>
-    );
+function Customcard(prop) {
+    const { name, cups, image } = prop.data;
+    function Percentage (value) {
+        var seasons=18;
+        var percent=(value/seasons)*100;
+
+        return percent;
+    }
+  return (
+    <Card style={{ width: '18rem',margin: "10px"}}>
+      {/* <Card.Img variant="top" src="holder.js/100px180" /> */}
+      <Imagecom data={image}></Imagecom>
+      <Card.Body>
+        <Card.Title><Heading1 data={name}></Heading1></Card.Title>
+        <Heading2 data={cups}></Heading2>
+        <CustomProgressbar data={Percentage(cups)}></CustomProgressbar>
+        {/* <Button variant="primary">Go somewhere</Button> */}
+      </Card.Body>
+    </Card>
+  );
 }
 
 export default Customcard;

@@ -4,6 +4,7 @@ import Customcard from './card/card';
 import Details, { Navlist } from './listdata/listdata';
 import Custonbuttom from './button/button';
 import Heading1,{ Heading2 } from './heading/heading';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   return (
@@ -15,7 +16,6 @@ function App() {
               <Custonbuttom key={index} text={eachdata}></Custonbuttom>
             );
           })
-
         }
       </div>
       <div className="App">

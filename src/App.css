@@ -11,6 +11,7 @@
   border-radius: 2vh;
   width: 30vh;
   margin: 2vh;
+  cursor: pointer;
 }
 
 .foot{
@@ -30,6 +31,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin-left: 15vh;
 }
 
 .App-logo {
