@@ -1,5 +1,45 @@
+.flex{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.list{
+  margin-bottom: 20px;
+}
+
+.nav{
+  background-color: palevioletred;
+  height: 10vh;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+.nav button{
+  background-color: plum;
+  border-radius: 2vh;
+  width: 30vh;
+  margin: 2vh;
+}
+
+.foot{
+  background-color: #282c34;
+  display: flex;
+  justify-content: space-around;
+  /* height: 200vh; */
+}
+
+.foot h2{
+  position: sticky;
+  color: antiquewhite;
+}
+
 .App {
   text-align: center;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
 
 .App-logo {
@@ -32,6 +72,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
