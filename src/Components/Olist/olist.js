@@ -4,7 +4,7 @@ function CustomList(prop) {
     const {iterable} = prop ;
     console.log(prop)
   return (
-    <ListGroup>
+    <ListGroup className='list'>
       {
         iterable.map((eachItem) => {
             return (

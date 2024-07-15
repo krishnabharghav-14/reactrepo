@@ -7,13 +7,15 @@ function Customcard(prop) {
     const {item} = prop ;
 
   return (
-    <Card style={{ width: '18rem' }}>
+    <Card style={{ width: '30%' , margin: '10px'}}>
       <Card.Img variant="top" src={item.image} />
       <Card.Body>
         <Card.Title>{item.name}</Card.Title>
+        <h6 style={{color:'red', margin:'10px'}}>Ingredients :</h6>
         <CustomList iterable={item.ingredients}></CustomList>
+        <h6 style={{color:'red', margin:'10px'}}>Instructions :</h6>
         <CustomList iterable={item.instructions}></CustomList>
-        <Button variant="primary">Go somewhere</Button>
+        {/* <Button variant="primary">Restaurante</Button> */}
       </Card.Body>
     </Card>
   );

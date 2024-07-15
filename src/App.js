@@ -8,7 +8,7 @@ import List from './datalist/datalist';
 function App() {
   return (
     <div className='App'>
-      <div>
+      <div className='flex'>
         {
           List.map((eachItem) => {
             return(
