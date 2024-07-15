@@ -2,7 +2,7 @@ import ListGroup from 'react-bootstrap/ListGroup';
 
 function CustomList(prop) {
     const {iterable} = prop ;
-    console.log(prop)
+    // console.log(prop)
   return (
     <ListGroup className='list'>
       {

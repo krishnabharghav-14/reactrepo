@@ -10,11 +10,12 @@ function App() {
     <div className='App'>
       <div className='flex'>
         {
-          List.map((eachItem) => {
+          List.length?(List.map((eachItem) => {
             return(
               <Customcard key={eachItem.id} item={eachItem}></Customcard>
             );
-          })
+          })):
+              <h6>Content not found</h6>
         }
       </div>
     </div>
