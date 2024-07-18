@@ -1,0 +1,15 @@
+.square1{
+    border: 1px soliod black;
+    width: 5vw;
+    height: 5vh;
+    margin: 2vw;
+    background-color: aqua;
+  }
+
+.square2{
+    border: 1px soliod black;
+    width: 5vw;
+    height: 5vh;
+    margin: 2vw;
+    background-color: blueviolet;
+  }
