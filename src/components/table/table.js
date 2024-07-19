@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Component } from "react";
+import { Component } from "react";;
 
 class CustomTable extends Component {
 
