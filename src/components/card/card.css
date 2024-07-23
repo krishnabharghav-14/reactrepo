@@ -1,0 +1,16 @@
+.card{
+    border: 1px solid whitesmoke;
+    background-color: white;
+    border-radius: 1vh;
+    margin: 2vw;
+    width: 28%;
+    box-sizing: border-box;
+    box-shadow: 2px 2px rgb(126, 123, 123);
+
+}
+
+.flex{
+    display: flex;
+    flex-wrap: wrap;
+    /* background-color: rgb(225, 225, 225); */
+}
