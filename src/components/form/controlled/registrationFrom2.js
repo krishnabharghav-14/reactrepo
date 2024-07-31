@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ControlledLoginForm from "./loginForm";
 
 function ControlledRegistrationForm() {
   const [userEmail, setUserEmail] = useState("");
@@ -73,6 +72,7 @@ function ControlledRegistrationForm() {
 
     setUsers([...users, newUser]);
 
+    // { To store the InputData provided by the user. } 
     window.localStorage.setItem("users", JSON.stringify([...users, newUser]));
     // window.localStorage.clear()
 
@@ -88,9 +88,6 @@ function ControlledRegistrationForm() {
   return (
     <>
       {/* Conditional rendering based on registration status */}
-      {registered ? (
-                <ControlledLoginForm />
-            ) : (
       <form onSubmit={submitHandler}>
         <div className="mb-3">
           <label htmlFor="exampleInputEmail1" className="form-label">
@@ -154,8 +151,7 @@ function ControlledRegistrationForm() {
           {passwordError && <span>{passwordError}</span>}
         </div>
         <input type="submit" className="btn btn-primary" value="Submit" />
-      </form>
-       )} 
+      </form> 
     </>
   );
 }

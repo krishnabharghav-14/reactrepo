@@ -1,79 +1,66 @@
-import { useState } from "react"
-import ControlledRegistrationForm from "./registrationFrom2"
+import React, { useState } from "react";
+// import ControlledRegistrationForm from "./registrationForm2";
+import './controlledLoginForm.css';
 
 function ControlledLoginForm() {
-
-    const [userName, setUserName] = useState("")
-    const [password, setPassword] = useState("")
-    const [userData, setUserData] = useState({})
-    const [userValid, setuserValid] = useState(false)
-    const [passwordValid, setpasswordValid] = useState(false)
-    const [table, setTable] = useState(false)
-
-    const [userNameError, setUserNameError] = useState(null)
-    const [passwordError, setPasswordError] = useState(null)
-    setUserData(JSON.parse(window.localStorage.getItem("users")))
-
-
+    const [userName, setUsername] = useState("");
+    const [password, setPassword] = useState("");
+    const [data, setData] = useState([]);
+    const [userNameError, setUserNameError] = useState("");
+    const [passwordError, setPasswordError] = useState("");
 
     const userNameHandler = (event) => {
-        const userEnteredUserName = event.target.value;
-        setUserName(userEnteredUserName)
-        // console.log(userEnteredUserName, "username entering...")
-        if (userEnteredUserName.length > 15) {
-            setUserNameError("Invalid input please enter less than 15 characters")
+        const userEnteredName = event.target.value;
+        setUsername(userEnteredName);
+        if (userEnteredName.length > 15) {
+            setUserNameError("Invalid input, please enter less than 15 characters");
+        } else {
+            setUserNameError("");
         }
-        else {
-            setUserNameError(null)
-            // setUserName(userEnteredUserName)
-            // console.log(userName)
-            if (userData.email == userName) {
-                setuserValid(true)
-            }
-        }
-    }
+    };
 
     const passwordHandler = (event) => {
         const userEnteredPassword = event.target.value;
-        setPassword(userEnteredPassword)
-
-        if (userEnteredPassword.length > 15) {
-            setPasswordError("Invalid input please enter less than 15 characters")
+        setPassword(userEnteredPassword);
+        if (userEnteredPassword.length < 6) {
+            setPasswordError("Password must be at least 6 characters long");
+        } else {
+            setPasswordError("");
         }
-        else {
-            setPasswordError(null)
-            if (userData == password) {
-                setpasswordValid(true)
+    };
+
+    const submitHandler = async (event) => {
+        event.preventDefault();
+        if (userNameError || passwordError) {
+            alert("Please fix the errors before submitting");
+            return;
+        }
+        try {
+            const response = await fetch('https://dummyjson.com/auth/login', {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    username: userName,
+                    password: password,
+                }),
+            });
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
             }
-            // setPassword(userEnteredPassword)
-            // console.log(password)
-
+            const finalResponse = await response.json();
+            setData([...data, finalResponse]);
+            setUsername("");
+            setPassword("");
+            console.log(finalResponse);
+        } catch (error) {
+            console.error("There was a problem with the fetch operation:", error);
         }
-        // console.log(userEnteredPassword, "password entering...")
-    }
-
-
-    // const submitHandler = (event) => {
-    //     event.preventDefault()
-    // }
-
-
-    const goBack = () => {
-
-        window.history.back()
-
-    }
-
-
-    const submitHandler = () => {
-        if (userName && password) {
-            setTable(true)
-        }
-    }
-
+    };
 
     return (
-        <>
+        <div className="form-container">
             <form onSubmit={submitHandler}>
                 <div className="mb-3">
                     <label htmlFor="exampleInputEmail1" className="form-label">
@@ -86,12 +73,11 @@ function ControlledLoginForm() {
                         aria-describedby="emailHelp"
                         value={userName}
                         onChange={userNameHandler}
-
                     />
                     <div id="emailHelp" className="form-text">
                         We'll never share your email with anyone else.
                     </div>
-                    {userNameError && <span>Invalid input please enter less than 15 characters</span>}
+                    {userNameError && <span className="error-message">{userNameError}</span>}
                 </div>
                 <div className="mb-3">
                     <label htmlFor="exampleInputPassword1" className="form-label">
@@ -104,45 +90,29 @@ function ControlledLoginForm() {
                         value={password}
                         onChange={passwordHandler}
                     />
-                    <div id="emailHelp" className="form-text">
-                        We'll never share your email with anyone else.
-                    </div>
-                    {passwordError && <span>{passwordError}</span>}
+                    {passwordError && <span className="error-message">{passwordError}</span>}
                 </div>
-                {/* <div className="mb-3 form-check">
-                    <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-                    <label className="form-check-label" htmlFor="exampleCheck1">
-                        Check me out
-                    </label>
-                </div> */}
                 <button type="submit" className="btn btn-primary">
                     Submit
-                </button><br /><br />
-                <button onClick={goBack} className="btn btn-primary">
-                    Register
                 </button>
             </form>
-
-
-            {
-                table ?
-                    <table class="table">
-                        <tbody>
-
-
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Mark</td>
-                                <td>Otto</td>
-                                <td>@mdo</td>
+            {data.length > 0 && (
+                <table className="table">
+                    <tbody>
+                        {data.map((eachData) => (
+                            <tr key={eachData.id}>
+                                <td>{eachData.id}</td>
+                                <td>{eachData.firstName}</td>
+                                <td>
+                                    <img src={eachData.image} width={100} height={100} alt="User" />
+                                </td>
                             </tr>
-                        </tbody>
-                    </table> :<></>
-            }
-
-        </>
+                        ))}
+                    </tbody>
+                </table>
+            )}
+        </div>
     );
-
 }
 
-export default ControlledLoginForm
+export default ControlledLoginForm;
