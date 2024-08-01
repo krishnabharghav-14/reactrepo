@@ -2,7 +2,7 @@ import { useState } from 'react'
 import axios from 'axios'
 import Orderlist from '../Orderlist/orderlist'
 
-const Customcard = () => {
+const CustomTable = () => {
 
     const [loader, setLoader] = useState(true)
 
@@ -99,4 +99,4 @@ const Customcard = () => {
     );
 }
 
-export default Customcard;
+export default CustomTable;

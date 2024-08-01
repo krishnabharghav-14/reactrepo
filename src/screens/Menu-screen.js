@@ -1,12 +1,12 @@
-import Customcard from "../components/card/card";
 import NavBar from "../components/navbar/navbar";
+import CustomTable from "../components/table/recipetable";
 
 const MenuScreen = () => {
     return (
         <>
         <NavBar/>
         <h3>Welcome to Menu Screen </h3>
-        <Customcard/>
+        <CustomTable/>
         </>
     );
 }
