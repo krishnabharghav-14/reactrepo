@@ -7,6 +7,7 @@ import SamsungForm from './components/form/uncontrolled/samsungForm';
 import PracticeControlledForm from './components/form/controlled/controlledform';
 import ControlledRegistrationForm from './components/form/controlled/registrationFrom2';
 import ControlledLoginForm from './components/form/controlled/loginForm';
+import NavigationStack from './navigation/navigation';
 
 function App() {
   return (
@@ -15,8 +16,11 @@ function App() {
       {/* <RegistrationForm/> */}
       {/* <SamsungForm/> */}
       {/* <PracticeControlledForm/> */}
-      <ControlledRegistrationForm/>
+      {/* <ControlledRegistrationForm/> */}
       {/* <ControlledLoginForm/> */}
+
+
+      <NavigationStack/>
     </div>
   );
 }
