@@ -1,4 +1,6 @@
 import NavBar from "../components/navbar/navbar";
+import CustomCard from "../components/table/recipecard";
+
 
 const MainScreen = () => {
 
@@ -7,6 +9,7 @@ const MainScreen = () => {
         <>
             <NavBar />
             <h3>Welcome to Main Screen </h3>
+            <CustomCard/>
 
         </>
 

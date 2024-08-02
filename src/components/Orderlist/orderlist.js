@@ -5,7 +5,7 @@ const Orderlist = (prop) => {
     return (
         <ol>
             {
-                list.map((eachData) => <li>{eachData}</li>)
+                list.map((eachData, ind) => <li key={ind}>{eachData}</li>)
             }
         </ol>
     );
