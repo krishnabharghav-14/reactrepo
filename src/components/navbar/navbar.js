@@ -3,7 +3,7 @@ import "./navbar.css"
 
 const NavBar = () => {
 
-    const Linkstyle  = {textDecoration:"none", margin : 10}
+    const Linkstyle  = { textDecoration:"none", margin : 10 }
 
 
     return (
@@ -33,11 +33,6 @@ const NavBar = () => {
                     <li className="nav-item">
                         <NavLink to={'/Login'} style={Linkstyle} >
                             Login
-                        </NavLink>
-                    </li>
-                    <li className="nav-item">
-                        <NavLink to={'/Joke'} style={Linkstyle} >
-                            Joke
                         </NavLink>
                     </li>
                 </ul>

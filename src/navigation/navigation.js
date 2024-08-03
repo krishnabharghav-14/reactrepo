@@ -4,7 +4,6 @@ import MainScreen from '../screens/Main-screen';
 import MenuScreen from '../screens/Menu-screen';
 import Location from '../screens/Location-screen';
 import LoginScreen from '../screens/Login-screen';
-import JokeScreen from '../screens/Joke-screen';
 
 const NavigationStack = () => {
     return (
@@ -15,7 +14,6 @@ const NavigationStack = () => {
             <Route path='/Location' element={<Location />} />
             <Route path='/Blog' element={<BlogScreen />} />
             <Route path='/Login' element={<LoginScreen/>}/>
-            <Route path='/Joke' element={<JokeScreen/>}/>
         </Routes>
         </BrowserRouter>
     );
