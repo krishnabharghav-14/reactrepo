@@ -16,8 +16,9 @@ const CustomCard = () => {
         try {
             const res = await axios.get("https://dummyjson.com/recipes");
             const recipeList = res.data.recipes.map((eachRecipe) => {
-                return { id : eachRecipe.id, image : eachRecipe.image, tags : eachRecipe.tags}
+                return { id : eachRecipe.id, image : eachRecipe.image, tags : eachRecipe.tags, cuisine : eachRecipe.cuisine}
             });
+            console.log(recipeList)
             updateList(recipeList);
             setLoader(false);
         } catch (err) {
@@ -26,11 +27,6 @@ const CustomCard = () => {
             setLoader(false);
         }
     };
-
-
-    const selectHandler = async (targetRecipe) => {
-
-    }
 
     return (
         <>
@@ -44,7 +40,7 @@ const CustomCard = () => {
                         <div className="card" style={{ width: "18rem" }} key={eachData.id}>
                             <img src={eachData.image} className="card-img-top" alt={eachData.name} />
                             <div className="card-body">
-                                <NavLink path={"/Menu"}><button onClick={() => selectHandler(eachData.id)} >Select</button></NavLink>
+                                <button ><NavLink to={`/recipe/${eachData.cuisine}/${eachData.id}`} style={{color: 'white'}}>Select</NavLink></button>
                                 {eachData.tags.map((eachTag) => (
                                     <p className="card-text" key={eachTag}>#{eachTag}</p>
                                 ))}

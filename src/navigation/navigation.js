@@ -5,6 +5,7 @@ import MenuScreen from '../screens/Menu-screen';
 import Location from '../screens/Location-screen';
 import LoginScreen from '../screens/Login-screen';
 import JokeScreen from '../screens/Joke-screen';
+import RecipeDetailScreen from '../screens/RecipeDetail-screen';
 
 const NavigationStack = () => {
     return (
@@ -16,6 +17,11 @@ const NavigationStack = () => {
             <Route path='/Blog' element={<BlogScreen />} />
             <Route path='/Login' element={<LoginScreen/>}/>
             <Route path='/Joke' element={<JokeScreen/>}/>
+
+
+            {/* dynamic Routes */}
+            <Route path='/recipe/:cusine/:recipeId' element={<RecipeDetailScreen/>} />
+
         </Routes>
         </BrowserRouter>
     );
