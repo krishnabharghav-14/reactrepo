@@ -9,6 +9,8 @@ import { createContext, useEffect, useState } from 'react';
 import SettingScreen from '../setting-screen';
 import axios from 'axios'
 import FavouriteRecipe from '../screens/FavouriteRecipe-screen';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export const DataContext = createContext()
 export const RecipeContext = createContext()
@@ -29,8 +31,11 @@ const NavigationStack = () => {
         try {
             const res = await axios.get("https://dummyjson.com/recipes");
             const list = res.data.recipes
+            const newlist = list.map((EachData)=> {
+                return { ...EachData, existsInFavourites: false }
+            })
             console.log(list)
-            setRecipeList(list);
+            setRecipeList(newlist);
         } catch (err) {
             console.error("error " + err);
         }
@@ -41,18 +46,51 @@ const NavigationStack = () => {
 
         const recipeExists = favDish.find((eachFood)=> eachFood.id==newDish.id)
 
+        // console.log(recipeList)
+        // console.log(newDish)
+        const newRecipeList = recipeList.map(eachRecipe=>{
+            if(eachRecipe.id==newDish.id){
+                console.log()
+                return { ...eachRecipe, existsInFavourites: true }
+            }
+            else{
+                return eachRecipe
+            }
+        })
+
+        setRecipeList(newRecipeList)
+
         if(recipeExists){
-            alert("Recipe already exists in favourites")            
+            toast.error("Recipe already exists in favourites", {
+                position: "top-right"
+              });
+            // toast("Recipe already exists in favourites")
+            // alert("Recipe already exists in favourites")            
         }else{
+            toast.success("Added to Favourites !", {
+                position: "top-right"
+              });
             setFavDish([...favDish,newDish])
         }
 
 
     }
 
-    const removeFavourite = (reamovedDish) => {
+    const removeFavourite = (removedDish) => {
 
-        const newFavouriteList = favDish.filter((each) => each.id!=reamovedDish.id)
+        const newRecipeList = recipeList.map(eachRecipe=>{
+            if(eachRecipe.id==removedDish.id){
+                console.log()
+                return { ...eachRecipe, existsInFavourites: false }
+            }
+            else{
+                return eachRecipe
+            }
+        })
+
+        setRecipeList(newRecipeList)
+
+        const newFavouriteList = favDish.filter((each) => each.id!=removedDish.id)
         setFavDish(newFavouriteList)
 
     }
@@ -91,13 +129,14 @@ const NavigationStack = () => {
 
 
                         {/* dynamic Routes */}
-                        <Route path='/recipe' element={<RecipeDetailScreen />} />
+                        {/* <Route path='/recipe' element={<RecipeDetailScreen />} /> */}
 
                         <Route path='/recipe/:cuisine/:recipeId' element={<RecipeDetailScreen/>} />
 
                     </Routes>
                 </DataContext.Provider>
             </BrowserRouter>
+            <ToastContainer />
         </RecipeContext.Provider>
     );
 }

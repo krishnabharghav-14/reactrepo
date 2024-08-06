@@ -1,12 +1,14 @@
 import { useContext } from 'react'
 import NavBar from '../components/navbar/navbar';
 import { DataContext, RecipeContext } from '../navigation/navigation';
+import { useNavigate } from 'react-router-dom';
 
 
 const FavouriteRecipe = () => {
 
     const { favDish, removeFavourite } = useContext(RecipeContext)
     const { darkMode } = useContext(DataContext)
+    const navigate = useNavigate()
     console.log(favDish)
 
 
@@ -15,12 +17,19 @@ const FavouriteRecipe = () => {
 
     }
 
+    const goBackHandler =() => {
+        navigate('/')
+    }
+
 
     return (
         <>
         <NavBar/>
 
         <h3>Welcome to Favvv page</h3>
+        <div>
+            <button onClick={goBackHandler} >go back</button>
+        </div>
 
         {
             favDish.length>0 ?

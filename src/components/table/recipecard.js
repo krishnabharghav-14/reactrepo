@@ -85,7 +85,7 @@
 
 
 import { useContext, useEffect, useState } from 'react';
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import './recipecard.css';
 import { DataContext, RecipeContext } from '../../navigation/navigation';
@@ -95,6 +95,7 @@ const CustomCard = ({ search, fetchedList }) => {
     const [list, setList] = useState([]);
     const [filteredList, setFilteredList] = useState([]);
     const [error, setError] = useState(null);
+    const navigate = useNavigate()
 
     const { darkMode } = useContext(DataContext);
 
@@ -103,6 +104,10 @@ const CustomCard = ({ search, fetchedList }) => {
 
     const addFoodHandler = (eachFood) => {
         addFavourite(eachFood)
+    }
+
+    const gotoFavouriteHandler = () => {
+        navigate('Favourite')
     }
 
     
@@ -122,7 +127,12 @@ const CustomCard = ({ search, fetchedList }) => {
                                 <h5 className="card-title">{eachData.name}</h5>
                                 <button><NavLink to={`/recipe/${eachData.cuisine}/${eachData.id}`} style={{ color: 'white' , textDecoration:'none'}}>See more</NavLink></button>
                                 <div>
+                                {
+                                    eachData.existsInFavourites ?
+                                    <button onClick={gotoFavouriteHandler} >Go To Favourites</button> :
                                     <button onClick={()=> addFoodHandler(eachData)}>Add to favourite</button>
+                                }
+                                    
                                 </div>
                                 {eachData.tags.map((eachTag) => (
                                     <p className="card-text" key={eachTag}>#{eachTag}</p>
