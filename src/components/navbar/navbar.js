@@ -1,7 +1,11 @@
 import { NavLink } from "react-router-dom";
 import "./navbar.css"
+import { RecipeContext } from "../../navigation/navigation";
+import { useContext } from "react";
 
 const NavBar = () => {
+
+    const {favDish} = useContext(RecipeContext)
 
     const Linkstyle  = {textDecoration:"none", margin : 10}
 
@@ -36,8 +40,13 @@ const NavBar = () => {
                         </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to={'/Joke'} style={Linkstyle} >
-                            Joke
+                        <NavLink to={'/recipe/:cuisine/:recipeId'} style={Linkstyle} >
+                            Recipe Details
+                        </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink to={'/Favourite'} style={Linkstyle} >
+                            Favourites {favDish.length}
                         </NavLink>
                     </li>
                     <li className="nav-item">

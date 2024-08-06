@@ -33,7 +33,7 @@ return (
             <h4>Ingredients Required to prepare "{item.name}"</h4>
             <Orderlist list={item.ingredients} />
             <h4>Instructions</h4>
-            <Orderlist list={item.instructions} />            
+            <Orderlist list={item.instructions} />
         </div>
     }
     </>

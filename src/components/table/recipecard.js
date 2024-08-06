@@ -88,9 +88,9 @@ import { useContext, useEffect, useState } from 'react';
 import { NavLink } from "react-router-dom";
 import axios from 'axios';
 import './recipecard.css';
-import { DataContext } from '../../navigation/navigation';
+import { DataContext, RecipeContext } from '../../navigation/navigation';
 
-const CustomCard = ({ search }) => {
+const CustomCard = ({ search, fetchedList }) => {
     const [loader, setLoader] = useState(true);
     const [list, setList] = useState([]);
     const [filteredList, setFilteredList] = useState([]);
@@ -98,51 +98,32 @@ const CustomCard = ({ search }) => {
 
     const { darkMode } = useContext(DataContext);
 
-    useEffect(() => {
-        fetchHandler();
-    }, []);
+    const { addFavourite } = useContext(RecipeContext)
 
-    useEffect(() => {
-        const searchedRecipes = list.filter((each) => {
-            return each.name.toLowerCase().includes(search.toLowerCase());
-        });
-        setFilteredList(searchedRecipes);
-    }, [search, list]);
 
-    const fetchHandler = async () => {
-        try {
-            const res = await axios.get("https://dummyjson.com/recipes");
-            const recipeList = res.data.recipes.map((eachRecipe) => ({
-                id: eachRecipe.id,
-                image: eachRecipe.image,
-                tags: eachRecipe.tags,
-                cuisine: eachRecipe.cuisine,
-                name: eachRecipe.name
-            }));
-            setList(recipeList);
-            setFilteredList(recipeList); // Set filteredList initially
-            setLoader(false);
-        } catch (err) {
-            console.error("error " + err);
-            setError("Failed to fetch recipes. Please try again later.");
-            setLoader(false);
-        }
-    };
+    const addFoodHandler = (eachFood) => {
+        addFavourite(eachFood)
+    }
+
+    
+
+    
+
 
     return (
         <>
-            {loader ? (
-                <h3>Please Wait...</h3>
-            ) : error ? (
-                <h3>{error}</h3>
-            ) : (
-                <div className='flex'>
-                    {filteredList.map((eachData) => (
+           {
+            fetchedList && fetchedList.length>0 &&
+            <div className='flex'>
+                    {fetchedList.map((eachData) => (
                         <div className={darkMode ? "card text-white bg-dark mb-3" : "card text-dark bg-light mb-3"} style={{ width: "18rem" }} key={eachData.id}>
                             <img src={eachData.image} className="card-img-top" alt={eachData.name} />
                             <div className="card-body">
                                 <h5 className="card-title">{eachData.name}</h5>
-                                <button><NavLink to={`/recipe/${eachData.cuisine}/${eachData.id}`} style={{ color: 'white' }}>Select</NavLink></button>
+                                <button><NavLink to={`/recipe/${eachData.cuisine}/${eachData.id}`} style={{ color: 'white' , textDecoration:'none'}}>See more</NavLink></button>
+                                <div>
+                                    <button onClick={()=> addFoodHandler(eachData)}>Add to favourite</button>
+                                </div>
                                 {eachData.tags.map((eachTag) => (
                                     <p className="card-text" key={eachTag}>#{eachTag}</p>
                                 ))}
@@ -150,7 +131,7 @@ const CustomCard = ({ search }) => {
                         </div>
                     ))}
                 </div>
-            )}
+           }
         </>
     );
 };

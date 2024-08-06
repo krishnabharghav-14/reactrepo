@@ -1,37 +1,27 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import NavBar from "../components/navbar/navbar";
+import { DataContext, RecipeContext } from "../navigation/navigation";
 import CustomCard from "../components/table/recipecard";
-import { DataContext } from "../navigation/navigation";
-
 
 const MainScreen = () => {
 
-    const { userName } = useContext(DataContext);
-    // console.log(userName)
-    const [searched, setSearched] = useState("")
+    const { userName } = useContext(DataContext)
+    const { recipeList } = useContext(RecipeContext)
+    // console.log(recipeList)
 
 
-    const changeHandler = (event) => {
-        const newSearch = event.target.value
-        setSearched(newSearch)
-    }
-
-
-    return (
+    return(
         <>
-            <NavBar />
-            <div>
-            <h3>Hello, {userName} </h3>
-            <input 
-            placeholder="Search" 
-            value={searched}
-            onChange={changeHandler} />
-            </div>
-            <CustomCard search={searched} />
+        <NavBar/>
+        <h3>Hello, {userName}</h3>
+
+        <CustomCard fetchedList={recipeList} />
+
 
         </>
-
     );
+
+    
 }
 
 export default MainScreen
