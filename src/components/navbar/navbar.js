@@ -40,7 +40,7 @@ const NavBar = () => {
                         </NavLink>
                     </li>
                     <li className="nav-item">
-                        <NavLink to={'/recipe'} style={Linkstyle} >
+                        <NavLink to={'/Recipe'} style={Linkstyle} >
                             Recipe Details
                         </NavLink>
                     </li>

@@ -72,15 +72,12 @@ const NavigationStack = () => {
               });
             setFavDish([...favDish,newDish])
         }
-
-
     }
 
     const removeFavourite = (removedDish) => {
 
         const newRecipeList = recipeList.map(eachRecipe=>{
             if(eachRecipe.id==removedDish.id){
-                console.log()
                 return { ...eachRecipe, existsInFavourites: false }
             }
             else{
@@ -126,18 +123,17 @@ const NavigationStack = () => {
                         <Route path='/Login' element={<LoginScreen />} />
                         <Route path='/Favourite' element={<FavouriteRecipe />} />
                         <Route path='/Setting' element={<SettingScreen />} />
+                        <Route path='/Recipe' element={<RecipeDetailScreen />} />
 
 
                         {/* dynamic Routes */}
-                        {/* <Route path='/recipe' element={<RecipeDetailScreen />} /> */}
-
                         <Route path='/recipe/:cuisine/:recipeId' element={<RecipeDetailScreen/>} />
 
-                    </Routes>
-                </DataContext.Provider>
-            </BrowserRouter>
+                    </Routes >
+                </DataContext.Provider >
+            </BrowserRouter >
             <ToastContainer />
-        </RecipeContext.Provider>
+        </RecipeContext.Provider >
     );
 }
 
