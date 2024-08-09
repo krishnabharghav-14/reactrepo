@@ -84,6 +84,129 @@
 
 
 
+// import { useContext, useEffect, useState } from 'react';
+// import { NavLink, useNavigate } from "react-router-dom";
+// import axios from 'axios';
+// import './recipecard.css';
+// import { DataContext, RecipeContext } from '../../navigation/navigation';
+
+// const CustomCard = ({ search, fetchedList }) => {
+//     console.log(fetchedList)
+//     const [list, setList] = useState([]);
+//     const [filteredList, setFilteredList] = useState(fetchedList);
+//     const [error, setError] = useState(null);
+//     const navigate = useNavigate()
+//     useEffect(()=> {
+//         fetchRecipe()
+//     }, [ search, ])
+
+//     const { darkMode } = useContext(DataContext);
+
+//     const { addFavourite } = useContext(RecipeContext)
+
+
+//     const addFoodHandler = (eachFood) => {
+//         addFavourite(eachFood)
+//         const updatedList = filteredList.map((food) =>
+//             food.id === eachFood.id ? { ...food, existsInFavourites: true } : food
+//         );
+//         setFilteredList(updatedList);
+//     }
+
+//     const gotoFavouriteHandler = () => {
+//         navigate('Favourite')
+//     }
+
+
+//     const fetchRecipe = async ()=> {
+//         try{
+//             const {status, data} = await axios.get(`https://dummyjson.com/recipes/search?q=${search}`)
+//             if(status==200){
+//                 const newData = data.recipes.map((each)=> {
+//                     return { ...each, existsInFavourites: false }
+//                 })
+//                 setFilteredList(data.recipes)             
+//             }
+//         }catch(err){
+
+//         }
+//     }
+
+    
+
+    
+
+
+//     return (
+//         <>
+//            {
+//             filteredList && filteredList.length>0 ?
+//             <div className='flex'>
+//                     {filteredList.map((eachData) => (
+//                         <div className={darkMode ? "card text-white bg-dark mb-3" : "card text-dark bg-light mb-3"} style={{ width: "18rem" }} key={eachData.id}>
+//                             <img src={eachData.image} className="card-img-top" alt={eachData.name} />
+//                             <div className="card-body">
+//                                 <h5 className="card-title">{eachData.name}</h5>
+//                                 <button><NavLink to={`/recipe/${eachData.cuisine}/${eachData.id}`} style={{ color: 'white' , textDecoration:'none'}}>See more</NavLink></button>
+//                                 <div>
+//                                 {
+//                                     eachData.existsInFavourites ?
+//                                     <button onClick={gotoFavouriteHandler} >Go To Favourites</button> :
+//                                     <button onClick={()=> addFoodHandler(eachData)}>Add to favourite</button>
+//                                 }
+                                    
+//                                 </div>
+//                                 {eachData.tags.map((eachTag) => (
+//                                     <p className="card-text" key={eachTag}>#{eachTag}</p>
+//                                 ))}
+//                             </div>
+//                         </div>
+//                     ))}
+//                 </div>:
+//                 fetchedList && fetchedList.length>0 &&
+//                 <div className='flex'>
+//                         {fetchedList.map((eachData) => (
+//                             <div className={darkMode ? "card text-white bg-dark mb-3" : "card text-dark bg-light mb-3"} style={{ width: "18rem" }} key={eachData.id}>
+//                                 <img src={eachData.image} className="card-img-top" alt={eachData.name} />
+//                                 <div className="card-body">
+//                                     <h5 className="card-title">{eachData.name}</h5>
+//                                     <button><NavLink to={`/recipe/${eachData.cuisine}/${eachData.id}`} style={{ color: 'white' , textDecoration:'none'}}>See more</NavLink></button>
+//                                     <div>
+//                                     {
+//                                         eachData.existsInFavourites ?
+//                                         <button onClick={gotoFavouriteHandler} >Go To Favourites</button> :
+//                                         <button onClick={()=> addFoodHandler(eachData)}>Add to favourite</button>
+//                                     }
+                                        
+//                                     </div>
+//                                     {eachData.tags.map((eachTag) => (
+//                                         <p className="card-text" key={eachTag}>#{eachTag}</p>
+//                                     ))}
+//                                 </div>
+//                             </div>
+//                         ))}
+//                     </div>
+//            }
+//         </>
+//     );
+// };
+
+// export default CustomCard;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 import { useContext, useEffect, useState } from 'react';
 import { NavLink, useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -91,36 +214,56 @@ import './recipecard.css';
 import { DataContext, RecipeContext } from '../../navigation/navigation';
 
 const CustomCard = ({ search, fetchedList }) => {
-    const [loader, setLoader] = useState(true);
+    console.log(fetchedList)
     const [list, setList] = useState([]);
-    const [filteredList, setFilteredList] = useState([]);
+    const [filteredList, setFilteredList] = useState(fetchedList);
     const [error, setError] = useState(null);
     const navigate = useNavigate()
+    useEffect(()=> {
+        fetchRecipe()
+    }, [ search, ])
 
     const { darkMode } = useContext(DataContext);
 
     const { addFavourite } = useContext(RecipeContext)
 
-
     const addFoodHandler = (eachFood) => {
         addFavourite(eachFood)
+        const updatedList = filteredList.map((food) =>
+            food.id === eachFood.id ? { ...food, existsInFavourites: true } : food
+        );
+        setFilteredList(updatedList);
     }
 
     const gotoFavouriteHandler = () => {
         navigate('Favourite')
     }
 
-    
-
-    
-
+    const fetchRecipe = async ()=> {
+        try{
+            const {status, data} = await axios.get(`https://dummyjson.com/recipes/search?q=${search}`)
+            if(status==200){
+                const newData = data.recipes.map((each)=> {
+                    if(fetchedList.find(each=> each.existsInFavourites==false)){
+                        return each
+                    }
+                    else{
+                        return { ...each, existsInFavourites: false }
+                    }
+                })
+                setFilteredList(newData); // Update filteredList with newData
+            }
+        }catch(err){
+            setError(err);
+        }
+    }
 
     return (
         <>
            {
-            fetchedList && fetchedList.length>0 &&
+            filteredList && filteredList.length > 0 ?
             <div className='flex'>
-                    {fetchedList.map((eachData) => (
+                    {filteredList.map((eachData) => (
                         <div className={darkMode ? "card text-white bg-dark mb-3" : "card text-dark bg-light mb-3"} style={{ width: "18rem" }} key={eachData.id}>
                             <img src={eachData.image} className="card-img-top" alt={eachData.name} />
                             <div className="card-body">
@@ -132,7 +275,6 @@ const CustomCard = ({ search, fetchedList }) => {
                                     <button onClick={gotoFavouriteHandler} >Go To Favourites</button> :
                                     <button onClick={()=> addFoodHandler(eachData)}>Add to favourite</button>
                                 }
-                                    
                                 </div>
                                 {eachData.tags.map((eachTag) => (
                                     <p className="card-text" key={eachTag}>#{eachTag}</p>
@@ -140,10 +282,33 @@ const CustomCard = ({ search, fetchedList }) => {
                             </div>
                         </div>
                     ))}
-                </div>
+                </div> :
+                fetchedList && fetchedList.length > 0 &&
+                <div className='flex'>
+                        {fetchedList.map((eachData) => (
+                            <div className={darkMode ? "card text-white bg-dark mb-3" : "card text-dark bg-light mb-3"} style={{ width: "18rem" }} key={eachData.id}>
+                                <img src={eachData.image} className="card-img-top" alt={eachData.name} />
+                                <div className="card-body">
+                                    <h5 className="card-title">{eachData.name}</h5>
+                                    <button><NavLink to={`/recipe/${eachData.cuisine}/${eachData.id}`} style={{ color: 'white' , textDecoration:'none'}}>See more</NavLink></button>
+                                    <div>
+                                    {
+                                        eachData.existsInFavourites ?
+                                        <button onClick={gotoFavouriteHandler} >Go To Favourites</button> :
+                                        <button onClick={()=> addFoodHandler(eachData)}>Add to favourite</button>
+                                    }
+                                    </div>
+                                    {eachData.tags.map((eachTag) => (
+                                        <p className="card-text" key={eachTag}>#{eachTag}</p>
+                                    ))}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
            }
         </>
     );
 };
 
 export default CustomCard;
+
