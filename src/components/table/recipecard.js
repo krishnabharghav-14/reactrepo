@@ -213,10 +213,11 @@ import axios from 'axios';
 import './recipecard.css';
 import { DataContext, RecipeContext } from '../../navigation/navigation';
 
-const CustomCard = ({ search, fetchedList }) => {
-    console.log(fetchedList)
+const CustomCard = ({ search }) => {
+    const { recipeList } = useContext(RecipeContext)
+    console.log(recipeList)
     const [list, setList] = useState([]);
-    const [filteredList, setFilteredList] = useState(fetchedList);
+    const [filteredList, setFilteredList] = useState(recipeList);
     const [error, setError] = useState(null);
     const navigate = useNavigate()
     useEffect(()=> {
@@ -244,13 +245,14 @@ const CustomCard = ({ search, fetchedList }) => {
             const {status, data} = await axios.get(`https://dummyjson.com/recipes/search?q=${search}`)
             if(status==200){
                 const newData = data.recipes.map((each)=> {
-                    if(fetchedList.find(each=> each.existsInFavourites==false)){
-                        return each
+                    if(recipeList.find(eachData=> each.id==eachData.id && eachData.existsInFavourites==true)){
+                        return { ...each, existsInFavourites: true }
                     }
                     else{
                         return { ...each, existsInFavourites: false }
                     }
                 })
+                
                 setFilteredList(newData); // Update filteredList with newData
             }
         }catch(err){
@@ -283,9 +285,9 @@ const CustomCard = ({ search, fetchedList }) => {
                         </div>
                     ))}
                 </div> :
-                fetchedList && fetchedList.length > 0 &&
+                recipeList && recipeList.length > 0 &&
                 <div className='flex'>
-                        {fetchedList.map((eachData) => (
+                        {recipeList.map((eachData) => (
                             <div className={darkMode ? "card text-white bg-dark mb-3" : "card text-dark bg-light mb-3"} style={{ width: "18rem" }} key={eachData.id}>
                                 <img src={eachData.image} className="card-img-top" alt={eachData.name} />
                                 <div className="card-body">
