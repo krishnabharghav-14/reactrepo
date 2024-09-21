@@ -1,5 +1,5 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom"
-import HomeScreen from "../Screens/Home-Screen"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomeScreen from "../screens/Home-Screen";
 
 const NavigationStack = ()=> {
     return (
